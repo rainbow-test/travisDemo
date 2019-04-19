@@ -2,28 +2,28 @@ language: swift
 os: osx
 osx_image: xcode10.1
 before_install:
-  - cd $TRAVIS_BUILD_DIR
-  - wget -c https://raw.githubusercontent.com/Pgyer/TravisFile/master/pgyer_upload.sh
-    -O pgyer_upload.sh
-  - chmod +x pgyer_upload.sh
-  - chmod +x scripts/add-key.sh
-  - chmod +x scripts/build.sh
-  - chmod +x scripts/upload.sh
-  - chmod +x scripts/remove-key.sh
+- cd $TRAVIS_BUILD_DIR
+- wget -c https://raw.githubusercontent.com/Pgyer/TravisFile/master/pgyer_upload.sh
+  -O pgyer_upload.sh
+- chmod +x pgyer_upload.sh
+- chmod +x scripts/add-key.sh
+- chmod +x scripts/build.sh
+- chmod +x scripts/upload.sh
+- chmod +x scripts/remove-key.sh
 before_script:
-  - openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in scripts/profile/Rainbow_Ad_Hoc.mobileprovision.enc
-    -d -a -out scripts/profile/Rainbow_Ad_Hoc.mobileprovision
-  - openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in scripts/certs/distribution.cer.enc
-    -d -a -out scripts/certs/distribution.cer
-  - openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in scripts/certs/distribution.p12.enc
-    -d -a -out scripts/certs/distribution.p12
-  - "./scripts/add-key.sh"
+- openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in scripts/profile/Rainbow_Ad_Hoc.mobileprovision.enc
+  -d -a -out scripts/profile/Rainbow_Ad_Hoc.mobileprovision
+- openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in scripts/certs/distribution.cer.enc
+  -d -a -out scripts/certs/distribution.cer
+- openssl aes-256-cbc -k "$ENCRYPTION_SECRET" -in scripts/certs/distribution.p12.enc
+  -d -a -out scripts/certs/distribution.p12
+- "./scripts/add-key.sh"
 script:
-  - "./scripts/build.sh"
+- "./scripts/build.sh"
 after_success:
-  - "./scripts/upload.sh"
+- "./scripts/upload.sh"
 after_script:
-  - "./scripts/remove-key.sh"
+- "./scripts/remove-key.sh"
 env:
   global:
   - APPNAME="PgyerDemo"
@@ -33,3 +33,4 @@ env:
   - secure: o78/7Kl9Jq7Bwvhn8VNiGv8nHGeTN08PDtJjlhOCKA0cDulhk0cGs8JEq5mAoVPzl03laKvKnIIk9/d4Vm9RyWKcytL0703wzCdP+7ejoXM2dpkrtCzgXYh59jRtunBhx3DwZTlwQMZee7xncFVP/lAtI1WOnUjyYExf+n/woKpB/Ups9TvrifLMxnIOwzGrSkv/ovNONujvBF1Pxrr9iEngVOWqBXM4aOdxjXTGPTwnouF1Z5ciHDOwyq8lQyGPdxboNcHHYy8vtraxQnzhVSbkVwRLVmN6nm7MdehfeOeyVmRxNI0mVQ1/L2aiX4CMhpCj+uBqtjQWPtb0rWvyD+HuvIDZo2Ms6vD6Tne8KDofY/JWTmyJlYxifT8XPFCEmS8SbHzUafktZmOL6AkPOz/9H5sA/vYNLFDNKOh47RFJDH/iU2vB36cFZg7wEOjO0fgDCFB+JfaNNI6VYVqJzLNN8BlDb9Y2W/jpVzO/FZmSTZDzqYbR0wbklZUFN/ZVqR8wcXsGIDaRMFwMdx+62XeP2QZBroOATnWvFAGJtvV/Mx2fuAgSoiLzhfhNGept10EUjLmW9QctonPnhgYTaTnaXJ9Io91wQyTp6ZG5OMD8tZWOEo7KnYfkx/aoLEVQB8zHuZr/eiiaWv3C7ctHT0LYpE4qciFJYvbk82vHHaI=
   - secure: pSCf3tiaKmZBXzblMCHy2mo3In6MoO9tueknyi/PWPPl/0Oc8DnZsDuY0YXgGIUKJCrE9wYGP6MEhxlZ4fpVxM8J3puII5bZwhMt9/QMs2Vu+REzYwIu+ygXueZ8NW2PERd2k+J+1tZ7qH++3jb5Cs3j9+tcxthfGOYVx5IAO54apNRE+9iZHVwZbIq7Q7RYvmyByh8nZvKx4EMvEDx4iDFOhV0L7/8krvAQa0eWtY+ECUjqQPbyS5c3D+Yl1fDg2nHaw8zbzTVuWF13sLWYRgRFtVt0beafcAJ7uwtgn1PxpDczd50vLuqRbU4VM9JXHGL++4AvG3OGBPlD938ot4boY4JwvESx2xhadpFW42U9AcwTeG1TEsB6mMm1BpBjX8RzwBu4ba364SpzSl/8peNCkq201F4Lv/ibvju3qy4tlxyfa0S3adz+YybqjzOl6deeGz/Jy8Z9fuv9uCbnG0/+FZ594ggBaZth3abcp97e4rxsB8HjwdioCtzVeqJ3GOV1U2Ift6A501wy3SA3WoJUotB/f5HZiQ8RcpIjVT8W6VY3UfN4Lv30McogR2QEZx3fuF+c9tA0M+za4QG9b/4qcJzipUJ/hL/uZ2QWO6Jaz8bouoNlzR5e0Z9Vg1IqsDq7mKtWkJOHGyj+F3e+hUuELY0m8k7GCrGZmGWbItE=
   - secure: P1EXw6GPWizd6gokmfhEJCLC0bCEhPH1FmA1xsay3RDHOokxhVgjhewvwBm7CnAETnAb8gn1ioRKrQghlhkCLrPE+iaUjD5LIfGzBiCBhA5BFcUc88Jr5Y+WD+1U2z0WjiNQBuVtndDJet7ug16oFHo0ACA2FUkfAELcxXAjmrXoLcF2/euIahQyseKlFJt0VrIJ4vjVJL7C3vpIGQInNTNlslU42Xu1k9WKflVzuDE2IejG6fg3Cryh5fErFo+YtmZSiWR6xZccpQpL+tcmgwdoV9x9T4YrfpiCeikM6+IaWofUm2KMmx3VDV+sllrBad1togXDgUtLpxLxRpB6k42gTc6SQHQhln4LPvFdDsCeiMLwnXzjzDdB0+LxbhppirYZl4/JI3jx4pBRzg3KTxaBpTPVXmRD0EighMWzTRKBvdO2CMOI0txCD7Ay0TfpfeP1noBYiQWGoVnu+3k9lS7jN+938jxsHX9uRt4Yw58CLSLECRZvcw+zIx66DDrMbfmIonUMqm1ZrYehiF531ml0aSkODnDYd+4oRii1/oMoIvKOMdueZkJVWTO5N3IORz+D2EQZNzGi1DiLZzLbnQ3VyT1Jhrsd3+qgAvSBcjIxacRkXHktYErdKPIWz6LLOhah2Nq8wOFIhdqxKArGaIUopBwvg+g6oxUPi8So99o=
+  - secure: Msm4zyXm4LGUEz6o4abi7ptyWacJsS28JLIDj+qF/Ft9YYFsVPyyFQkRqX7EO/xQaS2juomnENFMeAk13qxZxyaSMKtKpQFtdbQNSLlo8z63+XoD41fI33ThLdkw9oK6PV27sxg2LI2mLIbJ4W2JSprbykW0QKJ0G5VrwDlVaQjCuk11V8MK0AjUJM24Ykx1tpVMgQHO4ZQTfYh59KysaZPoFngGHSi0AEx/xozjBu/InR7PBoAB5Z7GYqr8c5E4jaQg+72f7LLTXkn/SdWQeChqFW5X6j3g0m3ZNo7LQT4fRWRBWEz0+CZ67UaAkrrNO4DQ183TBRKJnrPXo0Ovrhx6EYyFpwowTBTSsFwQ4bdNHV3uSaq+Zw/LURnlCL2hKT4KUi9bmkGQE1URRUPrkawCdkeykxf3H57pvUWzhl/9S9S7K5X9HBHuuAghknnk4Y2IL1lsnAjw44Oyh0NY6KzEXr7K3brwuxCycoCqRPJCYy6ImUBbTWRW4lu49vfoU/WBJyGBTsBjzo9PUFmW8ortCKfi9AUNkSWB3UUhNtFJ5SE7oJoCOHaxQsi19ln70hYtm9OKLm4FSmyNz3+U9q6eR68wcA0HAWp6ZL554bv4IjRa/XVuquZ+owwq2G5tXH3TBiO9k1zwJzWOzlks3/rqLVTjZa/kN7MI4PyQyJo=
